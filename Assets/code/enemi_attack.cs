@@ -13,6 +13,19 @@ public class PlayerAttack : MonoBehaviour
 
     private Health health;
     private float nextAttackTime;
+    private int bonusDamage; // lo pone PlayerUpgrades según el nivel del equipo
+
+    // Buffers reutilizables: evitan crear arrays/listas nuevos en cada golpe
+    private readonly Collider[] hitBuffer = new Collider[32];
+    private readonly HashSet<Health> alreadyHit = new HashSet<Health>();
+
+    /// <summary>Daño total = daño base + bonus del equipo.</summary>
+    public int Damage => damage + bonusDamage;
+
+    public void SetBonusDamage(int bonus)
+    {
+        bonusDamage = Mathf.Max(0, bonus);
+    }
 
     private void Awake()
     {
@@ -34,18 +47,18 @@ public class PlayerAttack : MonoBehaviour
     private void Attack()
     {
         Vector3 attackCenter = transform.position + transform.forward * attackDistance;
-        Collider[] hits = Physics.OverlapSphere(attackCenter, attackRadius, enemyLayer);
+        int hitCount = Physics.OverlapSphereNonAlloc(attackCenter, attackRadius, hitBuffer, enemyLayer);
 
         // Evita golpear dos veces al mismo enemigo si tiene varios colliders
-        HashSet<Health> alreadyHit = new HashSet<Health>();
+        alreadyHit.Clear();
 
-        foreach (Collider hit in hits)
+        for (int i = 0; i < hitCount; i++)
         {
-            Health enemyHealth = hit.GetComponentInParent<Health>();
+            Health enemyHealth = hitBuffer[i].GetComponentInParent<Health>();
             if (enemyHealth == null || enemyHealth == health) continue;
             if (!alreadyHit.Add(enemyHealth)) continue;
 
-            enemyHealth.TakeDamage(damage);
+            enemyHealth.TakeDamage(Damage);
         }
 
         // Aquí luego: animación de golpe, sonido, partículas...

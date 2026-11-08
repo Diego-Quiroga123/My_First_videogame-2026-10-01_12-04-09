@@ -26,6 +26,13 @@ public class EnemyClose : MonoBehaviour
     private Health playerHealth;
     private float nextAttackTime;
     private bool isDead;
+    private float damageMultiplier = 1f;
+
+    /// <summary>La usa Roomtemplates para hacer más fuertes a los enemigos en pisos altos.</summary>
+    public void SetDamageMultiplier(float multiplier)
+    {
+        damageMultiplier = Mathf.Max(0f, multiplier);
+    }
 
     private void Awake()
     {
@@ -102,7 +109,7 @@ public class EnemyClose : MonoBehaviour
         if (Time.time < nextAttackTime || playerHealth == null) return;
 
         nextAttackTime = Time.time + attackCooldown;
-        playerHealth.TakeDamage(damage);
+        playerHealth.TakeDamage(Mathf.RoundToInt(damage * damageMultiplier));
         // Aquí luego: animación de ataque, sonido...
     }
 
