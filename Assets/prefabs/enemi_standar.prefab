@@ -1,0 +1,241 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &1983604442435201754
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 100004, guid: ce43f40fc2027a949a58e385c6a2cd1f, type: 3}
+      propertyPath: m_Name
+      value: enemi_standar
+      objectReference: {fileID: 0}
+    - target: {fileID: 100004, guid: ce43f40fc2027a949a58e385c6a2cd1f, type: 3}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 400004, guid: ce43f40fc2027a949a58e385c6a2cd1f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 75.48792
+      objectReference: {fileID: 0}
+    - target: {fileID: 400004, guid: ce43f40fc2027a949a58e385c6a2cd1f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -2.500008
+      objectReference: {fileID: 0}
+    - target: {fileID: 400004, guid: ce43f40fc2027a949a58e385c6a2cd1f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -58.914032
+      objectReference: {fileID: 0}
+    - target: {fileID: 400004, guid: ce43f40fc2027a949a58e385c6a2cd1f, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400004, guid: ce43f40fc2027a949a58e385c6a2cd1f, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400004, guid: ce43f40fc2027a949a58e385c6a2cd1f, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400004, guid: ce43f40fc2027a949a58e385c6a2cd1f, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400004, guid: ce43f40fc2027a949a58e385c6a2cd1f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400004, guid: ce43f40fc2027a949a58e385c6a2cd1f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400004, guid: ce43f40fc2027a949a58e385c6a2cd1f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 100004, guid: ce43f40fc2027a949a58e385c6a2cd1f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8167514125031074497}
+    - targetCorrespondingSourceObject: {fileID: 100004, guid: ce43f40fc2027a949a58e385c6a2cd1f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8325597939228556557}
+    - targetCorrespondingSourceObject: {fileID: 100004, guid: ce43f40fc2027a949a58e385c6a2cd1f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5271615470950400465}
+    - targetCorrespondingSourceObject: {fileID: 100004, guid: ce43f40fc2027a949a58e385c6a2cd1f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1360143638848269674}
+    - targetCorrespondingSourceObject: {fileID: 100004, guid: ce43f40fc2027a949a58e385c6a2cd1f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7008748691775749433}
+    - targetCorrespondingSourceObject: {fileID: 100004, guid: ce43f40fc2027a949a58e385c6a2cd1f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6814726062452505345}
+    - targetCorrespondingSourceObject: {fileID: 100004, guid: ce43f40fc2027a949a58e385c6a2cd1f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3862679229433986766}
+  m_SourcePrefab: {fileID: 100100000, guid: ce43f40fc2027a949a58e385c6a2cd1f, type: 3}
+--- !u!1 &1983604442435234942 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100004, guid: ce43f40fc2027a949a58e385c6a2cd1f, type: 3}
+  m_PrefabInstance: {fileID: 1983604442435201754}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &8167514125031074497
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1983604442435234942}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9ca615dd8b9c9094ac92cae3dd39f85, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Health
+  maxHealth: 100
+  invulnerabilityTime: 0.5
+  onHealthChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  onDamaged:
+    m_PersistentCalls:
+      m_Calls: []
+  onDeath:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &8325597939228556557
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1983604442435234942}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 762769956633fdb3c9e152c89b4188e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerAttack
+  damage: 25
+  attackCooldown: 0.4
+  attackDistance: 1.2
+  attackRadius: 1
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 0
+--- !u!114 &5271615470950400465
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1983604442435234942}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26902b71615e6fd9b824dfe0dbb13eca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyDrop
+  drops:
+  - prefab: {fileID: 7007416085677110112, guid: f36e5e932ce42892a8b7074b6e2c14f8, type: 3}
+    chance: 0
+    minAmount: 0
+    maxAmount: 0
+  scatterRadius: 0.5
+  spawnHeight: 0.5
+--- !u!114 &1360143638848269674
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1983604442435234942}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4fa46e3f88df0f346b838bb98c017cad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyClose
+  player: {fileID: 0}
+  speed: 3
+  rotationSpeed: 5
+  detectionRange: 15
+  stopDistance: 1.5
+  damage: 10
+  attackRange: 1.8
+  attackCooldown: 1
+  destroyDelay: 0.5
+--- !u!54 &7008748691775749433
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1983604442435234942}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!136 &6814726062452505345
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1983604442435234942}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 1
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &3862679229433986766
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1983604442435234942}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f5c510e1b72fcfc49e0f233a9cf99a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyHealthBar
+  offset: {x: 0, y: 2, z: 0}
+  width: 1.2
+  height: 0.15
+  backColor: {r: 0, g: 0, b: 0, a: 0.6}
+  fullColor: {r: 0, g: 1, b: 0, a: 1}
+  lowColor: {r: 1, g: 0, b: 0, a: 1}
+  hideWhenFull: 0
+  smoothSpeed: 10

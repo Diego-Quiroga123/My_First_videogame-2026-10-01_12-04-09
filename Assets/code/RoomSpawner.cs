@@ -10,64 +10,60 @@ public class RoomSpawner : MonoBehaviour
     //4 Need RightDoor
 
     private Roomtemplates templates;
-    private int rand;
     private bool spawned = false;
-
-
 
     void Start()
     {
-        templates = GameObject.FindGameObjectWithTag("Rooms").GetComponent<Roomtemplates>();
-        Invoke("Spawn", 0.1f);
-    }
+        GameObject roomsObject = GameObject.FindGameObjectWithTag("Rooms");
 
+        if (roomsObject == null || !roomsObject.TryGetComponent(out templates))
+        {
+            Debug.LogError("RoomSpawner: no hay un objeto con la etiqueta 'Rooms' que tenga el script Roomtemplates.", this);
+            enabled = false;
+            return;
+        }
+
+        Invoke(nameof(Spawn), 0.1f);
+    }
 
     void Spawn()
     {
+        if (spawned) return;
 
-        if (spawned == false)
-        {
-            if(openSide == 1)
-        {
-             //Need BottomDoor
-             rand = Random.Range(0, templates.BottomDoor.Length);
-             Instantiate(templates.BottomDoor[rand], transform.position, templates.BottomDoor[rand].transform.rotation);
-             
+        GameObject[] options = null;
 
-        }
-        else if(openSide == 2)
+        switch (openSide)
         {
-            //2 Need TopDoor
-            rand = Random.Range(0, templates.TopDoor.Length);
-            Instantiate(templates.TopDoor[rand], transform.position, templates.TopDoor[rand].transform.rotation);
+            case 1: options = templates.BottomDoor; break; // Need BottomDoor
+            case 2: options = templates.TopDoor; break;    // Need TopDoor
+            case 3: options = templates.LeftDoor; break;   // Need LeftDoor
+            case 4: options = templates.RightDoor; break;  // Need RightDoor
         }
-        else if(openSide == 3)
+
+        if (options != null && options.Length > 0)
         {
-            //3 Need LeftDoor
-            rand = Random.Range(0, templates.LeftDoor.Length);
-            Instantiate(templates.LeftDoor[rand], transform.position, templates.LeftDoor[rand].transform.rotation);
+            GameObject prefab = options[Random.Range(0, options.Length)];
+            Instantiate(prefab, transform.position, prefab.transform.rotation);
         }
-        else if(openSide == 4)
-        {
-            //4 Need RightDoor
-            rand = Random.Range(0, templates.RightDoor.Length);
-            Instantiate(templates.RightDoor[rand], transform.position, templates.RightDoor[rand].transform.rotation);
-        }   
+
         spawned = true;
-        }
-        
-        }
-
-        private void OnTriggerEnter(Collider other)
-        {
-            if(other.GetComponent<RoomSpawner>().spawned == false && spawned == false)
-            {
-                Instantiate(templates.ClosedRoom, transform.position, Quaternion.identity);
-                Destroy(gameObject);
-            }
-            spawned = true;
-        }
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        // Antes: other.GetComponent<RoomSpawner>().spawned daba NullReferenceException
+        // cada vez que entraba al trigger algo que no fuera otro RoomSpawner (jugador, paredes...)
+        if (!other.TryGetComponent(out RoomSpawner otherSpawner)) return;
 
+        if (!otherSpawner.spawned && !spawned)
+        {
+            if (templates.ClosedRoom != null)
+            {
+                Instantiate(templates.ClosedRoom, transform.position, Quaternion.identity);
+            }
+            Destroy(gameObject);
+        }
 
+        spawned = true;
+    }
+}

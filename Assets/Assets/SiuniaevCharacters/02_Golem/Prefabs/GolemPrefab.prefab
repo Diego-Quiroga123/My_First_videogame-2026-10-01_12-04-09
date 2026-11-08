@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 8753619234690991415}
   - component: {fileID: 1688400848429993943}
+  - component: {fileID: 4478067799723502676}
+  - component: {fileID: 7923231002965446874}
   m_Layer: 0
   m_Name: GolemPrefab
   m_TagString: Untagged
@@ -60,6 +62,72 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &4478067799723502676
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8753619234690991416}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9ca615dd8b9c9094ac92cae3dd39f85, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Health
+  maxHealth: 100
+  invulnerabilityTime: 0.5
+  onHealthChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  onDamaged:
+    m_PersistentCalls:
+      m_Calls: []
+  onDeath:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &7923231002965446874
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8753619234690991416}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d252915e922ead9ca9eb466ab3e4aac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BossController
+  player: {fileID: 0}
+  speed: 2.5
+  rotationSpeed: 5
+  detectionRange: 25
+  stopDistance: 3
+  groundOffset: 0
+  pattern: 0000000001000000000000000100000001000000
+  timeBetweenAttacks: 2
+  slamWindup: 1.2
+  slamRadius: 5
+  slamDamage: 30
+  slamRecovery: 0.8
+  chargeWindup: 1
+  chargeSpeed: 14
+  chargeDistance: 12
+  chargeHitRadius: 1.5
+  chargeDamage: 25
+  chargeRecovery: 1.2
+  obstacleMask:
+    serializedVersion: 2
+    m_Bits: 0
+  enrageHealthPercent: 0.5
+  enrageSpeedMultiplier: 1.5
+  exitDoorPrefab: {fileID: 1257049334032826568, guid: 3fd64b45959cc79688098cec98ba5733, type: 3}
+  doorDelay: 1.5
+  onChargeStart:
+    m_PersistentCalls:
+      m_Calls: []
+  onSlam:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &8753619234851802246
 PrefabInstance:
   m_ObjectHideFlags: 0
