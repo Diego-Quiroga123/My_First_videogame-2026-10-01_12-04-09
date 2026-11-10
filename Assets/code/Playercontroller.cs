@@ -11,13 +11,23 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float jumpHeight = 1.5f;
     [SerializeField] private float gravity = -20f;
 
+    [Header("Animación")]
+    [SerializeField] private RuntimeAnimatorController movementController;
+
     private CharacterController controller;
+    private Animator animator;
     private Health health; // opcional: si existe, el jugador muerto no se mueve
     private float verticalVelocity;
 
     private void Awake()
     {
         controller = GetComponent<CharacterController>();
+        animator = GetComponentInChildren<Animator>();
+        if (animator != null && movementController != null)
+        {
+            animator.runtimeAnimatorController = movementController;
+            animator.applyRootMotion = false;
+        }
         health = GetComponent<Health>();
     }
 
@@ -26,6 +36,11 @@ public class PlayerController : MonoBehaviour
         bool isDead = health != null && health.IsDead;
 
         Vector3 horizontalMove = isDead ? Vector3.zero : ReadHorizontalMove();
+
+        if (animator != null)
+        {
+            animator.SetBool("IsMoving", horizontalMove.sqrMagnitude > 0.01f);
+        }
 
         // Mantiene al jugador pegado al suelo
         if (controller.isGrounded && verticalVelocity < 0f)
