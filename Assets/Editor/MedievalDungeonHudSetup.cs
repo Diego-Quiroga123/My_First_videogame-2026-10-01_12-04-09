@@ -34,11 +34,12 @@ public static class MedievalDungeonHudSetup
         }
 
         StyleDeath(deathObject, font, uiSprite);
+        StyleExitMenu(canvasObject.transform, font, uiSprite);
         StyleMap(canvasObject.transform, font, uiSprite);
         deathObject.transform.SetAsLastSibling();
         EditorSceneManager.MarkSceneDirty(scene);
         EditorSceneManager.SaveScene(scene);
-        EditorUtility.DisplayDialog("Interfaz de mazmorra", "Pantalla de muerte y minimapa medieval aplicados. El marcador sigue la posición del jugador en el mapa.", "OK");
+        EditorUtility.DisplayDialog("Interfaz de mazmorra", "Minimapa centrado en el jugador con un marcador dinámico para el boss.", "OK");
     }
 
     private static void StyleDeath(GameObject deathObject, TMP_FontAsset font, Sprite uiSprite)
@@ -217,12 +218,35 @@ public static class MedievalDungeonHudSetup
         centerImage.color = new Color(1f, 0.79f, 0.34f, 1f);
         centerImage.raycastTarget = false;
 
+        Transform oldBossMarker = map.transform.Find("Marcador Boss");
+        GameObject bossMarkerObject = oldBossMarker == null
+            ? new GameObject("Marcador Boss", typeof(RectTransform), typeof(Image), typeof(Outline))
+            : oldBossMarker.gameObject;
+        if (oldBossMarker == null) bossMarkerObject.transform.SetParent(map.transform, false);
+        RectTransform bossMarker = (RectTransform)bossMarkerObject.transform;
+        bossMarker.anchorMin = bossMarker.anchorMax = new Vector2(0.5f, 0.5f);
+        bossMarker.pivot = new Vector2(0.5f, 0.5f);
+        bossMarker.anchoredPosition = Vector2.zero;
+        bossMarker.sizeDelta = new Vector2(20f, 20f);
+        bossMarker.localRotation = Quaternion.Euler(0f, 0f, 45f);
+        Image bossMarkerImage = bossMarkerObject.GetComponent<Image>();
+        bossMarkerImage.sprite = uiSprite;
+        bossMarkerImage.color = new Color(0.56f, 0.08f, 0.06f, 1f);
+        bossMarkerImage.raycastTarget = false;
+        Outline bossOutline = bossMarkerObject.GetComponent<Outline>();
+        bossOutline.effectColor = new Color(0.04f, 0.025f, 0.012f, 1f);
+        bossOutline.effectDistance = new Vector2(2f, -2f);
+
+        TMP_Text bossLetter = GetOrCreateText(bossMarker, "Letra Boss", font);
+        ConfigureText(bossLetter, font, "B", 11f, new Color(1f, 0.9f, 0.72f, 1f), TextAlignmentOptions.Center);
+        PlaceCentered(bossLetter.rectTransform, Vector2.zero, new Vector2(18f, 18f));
         DungeonMinimapPlayerMarker tracker = map.GetComponent<DungeonMinimapPlayerMarker>();
         if (tracker == null) tracker = Undo.AddComponent<DungeonMinimapPlayerMarker>(map.gameObject);
         SerializedObject serializedTracker = new SerializedObject(tracker);
         serializedTracker.FindProperty("mapCamera").objectReferenceValue = mapCamera;
         serializedTracker.FindProperty("mapRect").objectReferenceValue = mapRect;
         serializedTracker.FindProperty("marker").objectReferenceValue = marker;
+        serializedTracker.FindProperty("bossMarker").objectReferenceValue = bossMarker;
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         if (player != null) serializedTracker.FindProperty("player").objectReferenceValue = player.transform;
         serializedTracker.ApplyModifiedProperties();
@@ -230,6 +254,75 @@ public static class MedievalDungeonHudSetup
         frame.SetAsLastSibling();
     }
 
+    private static void StyleExitMenu(Transform canvas, TMP_FontAsset font, Sprite uiSprite)
+    {
+        Transform exitTransform = FindDescendant(canvas, "Exit");
+        if (exitTransform == null) return;
+        RectTransform exitPanel = exitTransform.GetComponent<RectTransform>();
+        Image overlay = exitTransform.GetComponent<Image>();
+        if (overlay != null)
+        {
+            overlay.color = new Color(0.045f, 0.018f, 0.012f, 0.82f);
+            overlay.raycastTarget = true;
+        }
+
+        Transform oldFrame = exitTransform.Find("Marco Victoria Medieval");
+        GameObject frameObject = oldFrame == null
+            ? new GameObject("Marco Victoria Medieval", typeof(RectTransform), typeof(Image))
+            : oldFrame.gameObject;
+        if (oldFrame == null) frameObject.transform.SetParent(exitTransform, false);
+        RectTransform frame = (RectTransform)frameObject.transform;
+        PlaceCentered(frame, Vector2.zero, new Vector2(500f, 330f));
+        Image frameImage = frameObject.GetComponent<Image>();
+        frameImage.sprite = uiSprite;
+        frameImage.type = Image.Type.Sliced;
+        frameImage.color = new Color(0.66f, 0.42f, 0.17f, 1f);
+        frameImage.raycastTarget = false;
+
+        Transform oldInner = frame.Find("Panel Interior Victoria");
+        GameObject innerObject = oldInner == null
+            ? new GameObject("Panel Interior Victoria", typeof(RectTransform), typeof(Image))
+            : oldInner.gameObject;
+        if (oldInner == null) innerObject.transform.SetParent(frame, false);
+        RectTransform inner = (RectTransform)innerObject.transform;
+        inner.anchorMin = Vector2.zero;
+        inner.anchorMax = Vector2.one;
+        inner.offsetMin = new Vector2(6f, 6f);
+        inner.offsetMax = new Vector2(-6f, -6f);
+        Image innerImage = innerObject.GetComponent<Image>();
+        innerImage.sprite = uiSprite;
+        innerImage.type = Image.Type.Sliced;
+        innerImage.color = new Color(0.105f, 0.055f, 0.027f, 1f);
+        innerImage.raycastTarget = false;
+        inner.SetAsFirstSibling();
+
+        TMP_Text title = GetOrCreateText(frame, "Titulo Victoria", font);
+        ConfigureText(title, font, "MAZMORRA CONQUISTADA", 26f, new Color(0.92f, 0.68f, 0.3f, 1f), TextAlignmentOptions.Center);
+        PlaceCentered(title.rectTransform, new Vector2(0f, 112f), new Vector2(450f, 44f));
+        TMP_Text hint = GetOrCreateText(frame, "Subtitulo Victoria", font);
+        ConfigureText(hint, font, "Has derrotado al guardián", 15f, new Color(0.84f, 0.77f, 0.65f, 1f), TextAlignmentOptions.Center);
+        hint.enableAutoSizing = true;
+        hint.fontSizeMin = 12f;
+        hint.fontSizeMax = 15f;
+        hint.textWrappingMode = TextWrappingModes.Normal;
+        hint.overflowMode = TextOverflowModes.Ellipsis;
+        PlaceCentered(hint.rectTransform, new Vector2(0f, 53f), new Vector2(420f, 50f));
+
+        Transform next = FindDescendant(exitTransform, "Next");
+        Transform baseOption = FindDescendant(exitTransform, "Button");
+        StyleButton(next, frame, "SIGUIENTE PISO", new Vector2(0f, -24f), font, uiSprite);
+        StyleButton(baseOption, frame, "VOLVER A LA BASE", new Vector2(0f, -100f), font, uiSprite);
+
+        ExitMenu menu = canvas.GetComponent<ExitMenu>();
+        if (menu != null)
+        {
+            SerializedObject serializedMenu = new SerializedObject(menu);
+            serializedMenu.FindProperty("titleText").objectReferenceValue = title;
+            serializedMenu.FindProperty("hintText").objectReferenceValue = hint;
+            serializedMenu.ApplyModifiedProperties();
+        }
+        frame.SetAsLastSibling();
+    }
     private static Transform FindDescendant(Transform root, string objectName)
     {
         foreach (Transform child in root.GetComponentsInChildren<Transform>(true))
@@ -266,6 +359,8 @@ public static class MedievalDungeonHudSetup
         rect.sizeDelta = size;
     }
 }
+
+
 
 
 
